@@ -4,22 +4,21 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 
-namespace IgnoreIdleGuests
+namespace IgnoreIdleGuests;
+
+[HarmonyPatch(typeof(Alert_ColonistsIdle), "IdleColonists", MethodType.Getter)]
+public class Alert_ColonistsIdle_IdleColonists
 {
-    [HarmonyPatch(typeof(Alert_ColonistsIdle), "IdleColonists", MethodType.Getter)]
-    public class Alert_ColonistsIdle_IdleColonists
+    [HarmonyPostfix]
+    public static void Postfix(ref List<Pawn> __result)
     {
-        [HarmonyPostfix]
-        public static void Postfix(ref List<Pawn> __result)
+        if (!__result.Any())
         {
-            if (!__result.Any())
-            {
-                return;
-            }
-
-            var ignorePawns = __result.Where(pawn => pawn.WorkTagIsDisabled(WorkTags.AllWork)).ToList();
-
-            __result.RemoveAll(pawn => ignorePawns.Contains(pawn));
+            return;
         }
+
+        var ignorePawns = __result.Where(pawn => pawn.WorkTagIsDisabled(WorkTags.AllWork)).ToList();
+
+        __result.RemoveAll(pawn => ignorePawns.Contains(pawn));
     }
 }
