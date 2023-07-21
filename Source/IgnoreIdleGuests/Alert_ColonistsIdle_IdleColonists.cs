@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -17,8 +16,8 @@ public class Alert_ColonistsIdle_IdleColonists
             return;
         }
 
-        var ignorePawns = __result.Where(pawn => pawn.WorkTagIsDisabled(WorkTags.AllWork)).ToList();
-
-        __result.RemoveAll(pawn => ignorePawns.Contains(pawn));
+        __result.RemoveAll(pawn =>
+            pawn.WorkTagIsDisabled(WorkTags.AllWork) || pawn.GuestStatus == GuestStatus.Guest ||
+            pawn.questTags?.Any() == true);
     }
 }
