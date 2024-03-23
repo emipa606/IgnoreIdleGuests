@@ -9,7 +9,6 @@ public static class IgnoreIdleGuests
 {
     static IgnoreIdleGuests()
     {
-        var harmony = new Harmony("Mlie.IgnoreIdleGuests");
-        harmony.PatchAll(Assembly.GetExecutingAssembly());
+        new Harmony("Mlie.IgnoreIdleGuests").PatchAll(Assembly.GetExecutingAssembly());
     }
 }
