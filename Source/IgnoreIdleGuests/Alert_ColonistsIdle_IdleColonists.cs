@@ -6,7 +6,7 @@ using Verse;
 namespace IgnoreIdleGuests;
 
 [HarmonyPatch(typeof(Alert_ColonistsIdle), "IdleColonists", MethodType.Getter)]
-public class Alert_ColonistsIdle_IdleColonists
+public static class Alert_ColonistsIdle_IdleColonists
 {
     [HarmonyPostfix]
     public static void Postfix(ref List<Pawn> __result)
